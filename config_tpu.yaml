@@ -1,0 +1,49 @@
+# config_tpu.yaml
+# Configuration file for TPU training of LunarisCodex model
+
+# Model configuration
+model:
+  max_seq_len: 1024
+  vocab_size: 50304
+  n_layers: 12
+  n_heads: 12
+  d_model: 768
+  dropout: 0.0
+  bias: true
+  rope_theta: 10000.0
+
+# Data configuration
+data_dir: "data/"
+sequence_length: 1024
+
+# Optimizer configuration
+learning_rate: 3e-4
+weight_decay: 0.1
+beta1: 0.9
+beta2: 0.95
+
+# Scheduler configuration
+warmup_steps: 2000
+max_steps: 600000
+
+# Training configuration
+batch_size: 32  # Per TPU core - adjust based on your model size and TPU memory
+gradient_accumulation_steps: 1
+num_epochs: 1
+grad_clip: 1.0
+compile_model: false  # Disabled for TPU compatibility
+
+# TPU-specific configuration
+tpu_cores: 8  # Number of TPU cores (8 for TPU v3-8, v4-8)
+mixed_precision: true  # Enable mixed precision for better performance
+dataloader_num_workers: 4
+
+# I/O and Logging
+out_dir: "checkpoints_tpu"
+log_interval: 20
+save_interval: 1000
+
+# W&B configuration (optional)
+wandb_project: "lunaris-codex-tpu"
+wandb_entity: null  # Set to your W&B entity if needed
+wandb_run_name: null  # Will auto-generate if null
